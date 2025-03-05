@@ -12,14 +12,14 @@ library(multiMiR)
 
 # Read the CSV file into a data frame
 # Replace 'your_file.csv' with the path to your CSV file
-data <- read.csv('Degs_mRNA_miRNA_Pearson_Correlation_df_negative_p_0_05.csv', stringsAsFactors = FALSE)
+data <- read.csv('/Users/zainabnazari/data_work/only_6M_12M_miRNA_DEGs_FDR_5pc_1_5fc_Bowtie1_align_miRBase_v_0_m_1_only_R1_samtools_idxstat_filtered_Log2CPM_TMM_Norm.txt', stringsAsFactors = FALSE)
 
 # Initialize an empty list to store results
 results_list <- list()
 
 # Iterate over each row in the data frame
 for (i in 1:nrow(data)) {
-    mirna <- data$miRNA_Gene[i]
+    mirna <- data$SampleID[i]
     
     # Fetch miRNA-mRNA interactions
     result <- get_multimir(org = "mmu", mirna = mirna, table = "predicted")  # Use other tables if needed
@@ -30,7 +30,7 @@ for (i in 1:nrow(data)) {
         results_list[[i]] <- result@data
     } else {
         # If no results, store a message or NA
-        results_list[[i]] <- data.frame(mRNA_Gene = data$mRNA_Gene[i], miRNA_Gene = mirna, Message = "No results found")
+        results_list[[i]] <- data.frame(SampleID = data$SampleID[i], SampleID = mirna, Message = "No results found")
     }
 }
 
